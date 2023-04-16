@@ -16,7 +16,10 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """
+        Reads from csv file and returns the dataset.
+        Returns:
+            List[List]: The dataset.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -26,25 +29,32 @@ class Server:
 
         return self.__dataset
 
+    @staticmethod
+    def assert_positive_integer_type(value: int) -> None:
+        """
+        Asserts that the value is a positive integer.
+        Args:
+            value (int): The value to be asserted.
+        """
+        assert type(value) is int and value > 0
+
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        Takes 2 integer arguments and returns requested page from the dataset
+        Returns a page of the dataset.
         Args:
-            page: required page number (must be a positive integer)
-            page_size: number of records per page. (must be a positive integer)
-        Return:
-            list of lists containing required data from the dataset
+            page: The page number.
+            page_size: The page size.
+        Returns:
+            List[List]: The page of the dataset.
         """
-        assert type(page) is int and page > 0
-        assert type(page_size) is int and page_size > 0
-
+        self.assert_positive_integer_type(page)
+        self.assert_positive_integer_type(page_size)
         dataset = self.dataset()
-        data_length = len(dataset)
+        start, end = index_range(page, page_size)
         try:
-            index = index_range(page, page_size)
-            return dataset[index[0]:index[1]]
+            data = dataset[start:end]
         except IndexError:
-             data = []
+            data = []
         return data
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
