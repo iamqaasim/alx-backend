@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Defines class Server that paginates a database of popular baby names
+Contains class with methods to create simple pagination from csv data
 """
 import csv
-import math
+from typing import List
 index_range = __import__('0-simple_helper_function').index_range
 
 
