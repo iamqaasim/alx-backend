@@ -4,7 +4,7 @@ Defines class Server that paginates a database of popular baby names
 """
 import csv
 import math
-from typing import Tuple
+from typing import list, Tuple
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
